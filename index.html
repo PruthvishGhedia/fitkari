@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitKari — Adaptive Fashion for Every Body</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#F5EFE0;--clay:#C4956A;--clay-dark:#8B5E3C;--terracotta:#D4704A;
+  --cream:#FDFAF4;--deep:#1C1209;--text:#3D2B1F;--muted:#7A6055;
+  --white:#fff;--border:rgba(196,149,106,0.25);
+}
+html{scroll-behavior:smooth;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,250,244,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--clay-dark);letter-spacing:.02em;text-decoration:none}
+.logo span{font-style:italic;color:var(--terracotta)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--terracotta)}
+.nav-cta{background:var(--terracotta);color:white;border:none;padding:.5rem 1.25rem;border-radius:50px;font-size:.85rem;font-weight:500;cursor:pointer;letter-spacing:.03em;transition:background .2s;text-decoration:none}
+.nav-cta:hover{background:var(--clay-dark)}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem 4rem 5rem;background:var(--cream)}
+.hero-tag{display:inline-block;font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--terracotta);border:1px solid var(--terracotta);border-radius:50px;padding:.3rem .9rem;margin-bottom:1.5rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:3.8rem;line-height:1.08;color:var(--deep);margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:var(--terracotta)}
+.hero-sub{font-size:1rem;line-height:1.7;color:var(--muted);max-width:380px;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--terracotta);color:white;border:none;padding:.85rem 2rem;border-radius:50px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.02em;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--clay-dark);transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,112,74,0.3)}
+.btn-outline{background:transparent;color:var(--clay-dark);border:1.5px solid var(--clay);padding:.85rem 2rem;border-radius:50px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.02em;text-decoration:none;display:inline-block}
+.btn-outline:hover{background:var(--sand)}
+.hero-right{background:linear-gradient(160deg,#E8D5B7 0%,#D4B896 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:500px}
+.hero-img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0}
+.hero-badge{position:absolute;bottom:2.5rem;right:2.5rem;background:white;border-radius:16px;padding:1rem 1.25rem;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.hero-badge p{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
+.hero-badge strong{font-size:1.1rem;color:var(--deep)}
+
+.story{background:var(--sand);padding:6rem 2rem}
+.story-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.story-visual{position:relative}
+.story-frame{width:100%;aspect-ratio:3/4;background:linear-gradient(145deg,#D4B896,#C4956A);border-radius:20px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.story-frame img{width:100%;height:100%;object-fit:cover}
+.story-dot{position:absolute;top:-1rem;right:-1rem;width:80px;height:80px;background:var(--terracotta);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-size:.65rem;text-align:center;line-height:1.3;letter-spacing:.05em;text-transform:uppercase;padding:.5rem}
+.section-tag{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--terracotta);margin-bottom:1rem;display:block}
+.story-text h2{font-family:'Playfair Display',serif;font-size:2.6rem;line-height:1.15;color:var(--deep);margin-bottom:1.5rem}
+.story-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:.95rem}
+
+.stats{background:var(--deep);padding:4rem 2rem}
+.stats-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-item{position:relative}
+.stat-item:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);height:60%;width:1px;background:rgba(255,255,255,0.15)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--clay);font-weight:400;line-height:1}
+.stat-label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.5rem}
+
+.products{padding:6rem 2rem;background:var(--cream)}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--deep);line-height:1.2}
+.section-header h2 em{font-style:italic;color:var(--clay)}
+.section-header p{margin-top:.75rem;color:var(--muted);font-size:.95rem;max-width:480px;margin-left:auto;margin-right:auto}
+.product-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.product-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 25px 50px rgba(196,149,106,.2)}
+.product-img{height:380px;background:linear-gradient(145deg,#EDD9C0,#D4B896);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.product-img:hover img{transform:scale(1.05)}
+.product-tag-img{position:absolute;top:1rem;left:1rem;background:var(--terracotta);color:white;font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;z-index:1}
+.product-info{padding:1.5rem}
+.product-info h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--deep);margin-bottom:.4rem}
+.product-info p{font-size:.85rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-size:1.1rem;font-weight:500;color:var(--clay-dark)}
+.product-btn{background:var(--sand);color:var(--clay-dark);border:none;padding:.5rem 1.1rem;border-radius:50px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.03em}
+.product-btn:hover{background:var(--terracotta);color:white;transform:scale(1.05)}
+.products-cta{text-align:center;margin-top:3rem}
+
+.product-2-placeholder{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:480px;padding:2rem;position:relative}
+.product-2-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,#EDD9C0,#D4B896);opacity:0.3}
+.product-2-placeholder-inner{position:relative;z-index:1;text-align:center}
+.product-2-placeholder h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--deep);margin-bottom:.5rem}
+.product-2-placeholder p{color:var(--muted);font-size:.9rem}
+
+.values{background:var(--sand);padding:6rem 2rem}
+.values-inner{max-width:1000px;margin:0 auto}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.value-card{background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:border-color .2s,transform .2s}
+.value-card:hover{border-color:var(--clay);transform:translateY(-4px)}
+.value-icon{font-size:2rem;margin-bottom:1rem}
+.value-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--deep);margin-bottom:.6rem}
+.value-card p{font-size:.85rem;color:var(--muted);line-height:1.7}
+
+.insta{padding:5rem 2rem;background:var(--cream)}
+.insta-inner{max-width:1000px;margin:0 auto;text-align:center}
+.insta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:3rem}
+.insta-tile{aspect-ratio:1;border-radius:12px;overflow:hidden;cursor:pointer;position:relative}
+.insta-tile:nth-child(1){background:linear-gradient(135deg,#EDD9C0,#C4956A)}
+.insta-tile:nth-child(2){background:linear-gradient(135deg,#E8C5A5,#D4704A)}
+.insta-tile:nth-child(3){background:linear-gradient(135deg,#D4B896,#8B5E3C)}
+.insta-tile:nth-child(4){background:linear-gradient(135deg,#F5EFE0,#C4956A)}
+.insta-tile img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.insta-tile:hover img{transform:scale(1.05)}
+.insta-tile-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,.5);transition:opacity .2s}
+.insta-tile:hover .insta-tile-inner{opacity:.7}
+.insta-handle{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--deep);margin-top:.5rem}
+.insta-handle em{font-style:italic;color:var(--clay)}
+
+.newsletter{background:var(--terracotta);padding:5rem 2rem}
+.newsletter-inner{max-width:560px;margin:0 auto;text-align:center}
+.newsletter h2{font-family:'Playfair Display',serif;font-size:2.2rem;color:white;margin-bottom:.75rem;line-height:1.2}
+.newsletter p{color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:2rem}
+.newsletter-form{display:flex;gap:.75rem;max-width:400px;margin:0 auto}
+.newsletter-form input{flex:1;border:none;border-radius:50px;padding:.85rem 1.25rem;font-size:.9rem;outline:none;background:rgba(255,255,255,.95);color:var(--text)}
+.newsletter-form button{background:var(--deep);color:white;border:none;border-radius:50px;padding:.85rem 1.5rem;font-size:.85rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .2s}
+.newsletter-form button:hover{background:var(--clay-dark)}
+
+footer{background:var(--deep);padding:3.5rem 2rem 2rem;color:rgba(255,255,255,.6)}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .logo{font-size:1.2rem;display:block;margin-bottom:.75rem}
+.footer-brand p{font-size:.85rem;line-height:1.7;max-width:260px}
+.footer-col h4{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:1rem;font-weight:500}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.5rem}
+.footer-col a{font-size:.85rem;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--clay)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.8rem}
+.social-links{display:flex;gap:1rem}
+.social-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.8rem;transition:color .2s}
+.social-links a:hover{color:var(--clay)}
+
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal.active{display:flex}
+.modal-content{background:var(--white);border-radius:24px;max-width:900px;width:100%;max-height:90vh;overflow:hidden;position:relative;box-shadow:0 25px 80px rgba(0,0,0,0.4)}
+.modal-close{position:absolute;top:1rem;right:1rem;width:44px;height:44px;background:var(--deep);color:white;border:none;border-radius:50%;font-size:1.4rem;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+.modal-close:hover{background:var(--terracotta);transform:rotate(90deg)}
+.modal-gallery{display:flex;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--clay) var(--cream)}
+.modal-gallery::-webkit-scrollbar{height:8px}
+.modal-gallery::-webkit-scrollbar-track{background:var(--cream)}
+.modal-gallery::-webkit-scrollbar-thumb{background:var(--clay);border-radius:4px}
+.modal-gallery img{width:100%;height:450px;object-fit:cover;flex-shrink:0}
+.modal-thumbnails{display:flex;gap:.75rem;padding:1.25rem;background:var(--cream);justify-content:center;flex-wrap:wrap}
+.modal-thumb{width:70px;height:70px;border-radius:10px;overflow:hidden;cursor:pointer;opacity:0.6;transition:opacity .2s,transform .2s;border:2px solid transparent}
+.modal-thumb:hover{opacity:0.9;transform:scale(1.1)}
+.modal-thumb.active{opacity:1;border-color:var(--terracotta)}
+.modal-thumb img{width:100%;height:100%;object-fit:cover}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:3rem 1.5rem}
+  .hero h1{font-size:2.4rem}
+  .hero-right{min-height:350px}
+  .hero-badge{bottom:1.5rem;right:1.5rem}
+  .story-inner{grid-template-columns:1fr;gap:2.5rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2)::after{display:none}
+  .product-grid{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:1fr}
+  .insta-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-top{grid-template-columns:1fr;gap:2rem}
+  .nav-links{display:none}
+  .newsletter-form{flex-direction:column}
+  .modal-gallery img{height:300px}
+  .modal-thumb{width:55px;height:55px}
+}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp .6s ease-out forwards}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">FitKari</a>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#insta">Lookbook</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#products">Shop Now</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">✦ Summer '26 Collection</span>
+    <h1>Fashion that<br><em>adapts</em> to you.</h1>
+    <p class="hero-sub">One dress fits three sizes. Designed for real bodies, real changes, and real confidence. Inclusive fashion that grows with you.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#products">Explore Collection</a>
+      <a class="btn-outline" href="#story">Our Mission</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img" src="FitKari.jpg" alt="FitKari Fashion">
+    <div class="hero-badge">
+      <p>Adaptive Sizing</p>
+      <strong>1 dress = 3 sizes</strong>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="story-visual">
+      <div class="story-frame">
+        <img src="FitKari.jpg" alt="FitKari Brand Story">
+      </div>
+      <div class="story-dot">Made<br>with<br>Love</div>
+    </div>
+    <div class="story-text">
+      <span class="section-tag">✦ Our Mission</span>
+      <h2>Fashion that celebrates every body.</h2>
+      <p>We believe clothing should adapt to you — not the other way around. Our adaptive size clusters mean one dress comfortably fits three consecutive sizes (like L–XL–XXL).</p>
+      <p>Unlike traditional brands that just extend size ranges, we focus on supporting real body changes — especially for pregnant and plus-size women. No more buying new clothes every few months. Just fashion that moves with you.</p>
+      <p>This is body positivity in action. Sustainable, practical, and emotionally empowering. Because you deserve to feel confident every single day.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">38%</div>
+      <div class="stat-label">Women face body shaming globally</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">47.5%</div>
+      <div class="stat-label">Women in Indian cities affected</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">40%</div>
+      <div class="stat-label">Adolescents face body shaming</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1 dress</div>
+      <div class="stat-label">Fits 3 sizes — L, XL, XXL</div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="section-header">
+    <span class="section-tag">✦ The Collection</span>
+    <h2>Pieces designed to<br><em>embrace you.</em></h2>
+    <p>Every piece made with intention — breathable fabrics, inclusive sizing, and silhouettes that flatter every shape.</p>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img" onclick="openModal()">
+        <span class="product-tag-img">Bestseller</span>
+        <img src="assets/Product-1-1.jpg" alt="The Adaptive Tier Dress">
+      </div>
+      <div class="product-info">
+        <h3>The Adaptive Tier Dress</h3>
+        <p>Empire-line with raised waist seam, fitted through the yoke then releasing into a soft flare. Back string ties are adjustable — making one garment work across 3 sizes. Made in breathable Mul cotton.</p>
+        <div class="product-footer">
+          <span class="product-price">₹1,390</span>
+          <button class="product-btn" onclick="window.open('https://wa.me/919428913529?text=Hi! I am interested in The Adaptive Tier Dress','_blank')">Order via WhatsApp →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-2-placeholder">
+      <div class="product-2-placeholder-inner">
+        <span class="section-tag">✦ Coming Soon</span>
+        <h3>New Arrival</h3>
+        <p>Something special is on the way.<br>Stay tuned!</p>
+      </div>
+    </div>
+  </div>
+  <div class="products-cta">
+    <a class="btn-primary" href="#contact">Can't decide? Message us ✦</a>
+  </div>
+</section>
+
+<section class="values" id="values">
+  <div class="values-inner">
+    <div class="section-header">
+      <span class="section-tag">✦ Why FitKari</span>
+      <h2>What we stand for.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">✨</div>
+        <h3>Adaptive Sizing</h3>
+        <p>One dress fits 3 consecutive sizes. Our innovative design adapts to your body — through pregnancy, weight changes, or just life.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌿</div>
+        <h3>Mul Cotton Comfort</h3>
+        <p>Breathable, durable, eco-friendly, and skin-friendly. Perfect for sensitive skin and all-day comfort in any season.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">💜</div>
+        <h3>Body Positivity</h3>
+        <p>Fashion should make you feel confident, not judged. We design for real bodies with real curves, changes, and beauty.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="insta" id="insta">
+  <div class="insta-inner">
+    <span class="section-tag">✦ Lookbook</span>
+    <h2 class="insta-handle">Follow the movement.<br><em>@fitkari</em></h2>
+    <div class="insta-grid">
+      <div class="insta-tile"><div class="insta-tile-inner">🌅</div></div>
+      <div class="insta-tile"><div class="insta-tile-inner">🌿</div></div>
+      <div class="insta-tile"><div class="insta-tile-inner">☀️</div></div>
+      <div class="insta-tile"><div class="insta-tile-inner">🌸</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="contact">
+  <div class="newsletter-inner">
+    <h2>Be first to know<br>what's coming.</h2>
+    <p>New drops, styling tips, and exclusive offers — straight to your inbox. No spam, ever.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="your@email.com">
+      <button onclick="window.open('https://wa.me/919428913529?text=Hi! I want to join the FitKari newsletter','_blank')">Join us</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="#">FitKari</a>
+        <p>Adaptive fashion for every body. One dress fits three sizes — because you deserve clothing that celebrates you.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#products">All Products</a></li>
+          <li><a href="#products">New Arrivals</a></li>
+          <li><a href="#products">Bestsellers</a></li>
+          <li><a href="#">Size Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#story">Our Mission</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="https://wa.me/919428913529" target="_blank">WhatsApp Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FitKari. All rights reserved.</span>
+      <div class="social-links">
+        <a href="https://instagram.com/fitkari" target="_blank">Instagram</a>
+        <a href="https://wa.me/919428913529" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-gallery" id="modalGallery">
+      <img src="assets/Product-1-1.jpg" alt="Adaptive Tier Dress View 1">
+      <img src="assets/Product-1-2.jpg" alt="Adaptive Tier Dress View 2">
+      <img src="assets/Product-1-3.jpg" alt="Adaptive Tier Dress View 3">
+      <img src="assets/Product-1-4.jpg" alt="Adaptive Tier Dress View 4">
+      <img src="assets/Product-1-5.jpg" alt="Adaptive Tier Dress View 5">
+      <img src="assets/Product-1-6.jpg" alt="Adaptive Tier Dress View 6">
+    </div>
+    <div class="modal-thumbnails" id="modalThumbnails">
+      <div class="modal-thumb active" onclick="selectImage(0)"><img src="assets/Product-1-1.jpg" alt="Thumb 1"></div>
+      <div class="modal-thumb" onclick="selectImage(1)"><img src="assets/Product-1-2.jpg" alt="Thumb 2"></div>
+      <div class="modal-thumb" onclick="selectImage(2)"><img src="assets/Product-1-3.jpg" alt="Thumb 3"></div>
+      <div class="modal-thumb" onclick="selectImage(3)"><img src="assets/Product-1-4.jpg" alt="Thumb 4"></div>
+      <div class="modal-thumb" onclick="selectImage(4)"><img src="assets/Product-1-5.jpg" alt="Thumb 5"></div>
+      <div class="modal-thumb" onclick="selectImage(5)"><img src="assets/Product-1-6.jpg" alt="Thumb 6"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal() {
+  document.getElementById('productModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('productModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function selectImage(index) {
+  const gallery = document.getElementById('modalGallery');
+  const thumbs = document.querySelectorAll('.modal-thumb');
+  const scrollPosition = index * gallery.offsetWidth;
+  gallery.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+  thumbs.forEach((thumb, i) => thumb.classList.toggle('active', i === index));
+}
+
+document.getElementById('modalGallery').addEventListener('scroll', function() {
+  const index = Math.round(this.scrollLeft / this.offsetWidth);
+  document.querySelectorAll('.modal-thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+});
+
+document.getElementById('productModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
