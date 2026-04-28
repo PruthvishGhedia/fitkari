@@ -481,6 +481,40 @@ document.getElementById('productModal').addEventListener('click', function(e) {
 });
 
 document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Product 2 Modal Functions
+function openModal2() {
+  document.getElementById('productModal2').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal2() {
+  document.getElementById('productModal2').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function selectImage2(index) {
+  const gallery = document.getElementById('modalGallery2');
+  const thumbs = document.querySelectorAll('#modalThumbnails2 .modal-thumb');
+  const scrollPosition = index * gallery.offsetWidth;
+  gallery.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+  thumbs.forEach((thumb, i) => thumb.classList.toggle('active', i === index));
+}
+
+document.getElementById('modalGallery2').addEventListener('scroll', function() {
+  const index = Math.round(this.scrollLeft / this.offsetWidth);
+  document.querySelectorAll('#modalThumbnails2 .modal-thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+});
+
+document.getElementById('productModal2').addEventListener('click', function(e) {
+  if (e.target === this) closeModal2();
+});
+
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal2();
 });
 
