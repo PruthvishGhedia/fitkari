@@ -230,13 +230,15 @@ If you want a custom domain like `fitkari.com`:
 | Task | Where to Look in Code |
 |------|----------------------|
 | Change logo | Nav section, `logo.jpg` |
-| Change hero image | Hero section, `hero.jpg` |
-| Change story image | Story section, `story.jpg` |
+| Change hero images | Hero section, `hero-1.jpg`, `hero-2.jpg`, etc. |
+| Change story images | Story section, `story-1.jpg`, `story-2.jpg`, etc. |
 | Change Product 1 | Products section, first `.product-card` |
 | Change Product 2 | Products section, second `.product-card` |
 | Change prices | Look for `<span class="product-price">` |
 | Change WhatsApp number | Look for `wa.me/919428913529` |
 | Change footer text | Look for `<footer>` section |
+| Update survey insights | Look for `.survey-card` sections |
+| Adjust slideshow speed | Look for `setInterval` in script section (hero: 5000ms, story: 4000ms) |
 
 ---
 
